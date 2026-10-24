@@ -1,0 +1,45 @@
+use std::env;
+
+#[derive(Debug)]
+struct Task {
+    task: String,
+    status: String,
+}
+
+fn main() {
+
+    let args: Vec<String> = env::args().collect();
+    let mut todo: Vec<Task> = Vec::new();
+
+    match args[1].as_str() {
+        "add" => add_task(&mut todo, args[2].clone()),
+        "list" => list_task(&todo),
+        "delete" => del_task(&mut todo, args[2].trim().parse::<u8>().unwrap_or(0)),
+        _ => (),
+    }
+    list_task(&todo);
+}
+
+fn list_task(list: &Vec<Task>) {
+    for i in 1..=list.len() {
+        println!("{i}. {}", list[i-1].task);
+    }
+}
+
+fn del_task(list: &mut Vec<Task>, index: u8) {
+    if index != 0 && usize::from(index) < list.len() {
+        list.remove(index.into());
+    } else {
+        println!("ummm...are u dumbhead or smthing?");
+    }
+}
+
+fn add_task(list: &mut Vec<Task>, task: String) {
+
+    let the_task = Task {
+        task: task,
+        status: "ongoing".to_string(),
+    };
+
+    list.push(the_task);
+}
