@@ -61,4 +61,6 @@ fn add_task(list: &mut Vec<Task>, task: String) {
     list.push(the_task);
 }
 
-fn help() {}
+fn help() {
+    println!("help -> add, delete, list, help");
+}
